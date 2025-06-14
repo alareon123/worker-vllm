@@ -58,9 +58,10 @@ class JobInput:
         batch_size_growth_factor = job.get("batch_size_growth_factor")
         self.batch_size_growth_factor = float(batch_size_growth_factor) if batch_size_growth_factor else None 
         min_batch_size = job.get("min_batch_size")
-        self.min_batch_size = int(min_batch_size) if min_batch_size else None 
+        self.min_batch_size = int(min_batch_size) if min_batch_size else None
         self.openai_route = job.get("openai_route")
         self.openai_input = job.get("openai_input")
+        self.character = job.get("character")
 class DummyState:
     def __init__(self):
         self.request_metadata = None
