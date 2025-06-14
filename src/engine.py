@@ -125,6 +125,8 @@ class OpenAIvLLMEngine(vLLMEngine):
         self.lora_adapters = self._load_lora_adapters()
         asyncio.run(self._initialize_engines())
         self.raw_openai_output = bool(int(os.getenv("RAW_OPENAI_OUTPUT", 1)))
+        self.character_cards_dir = os.getenv("CHARACTER_CARDS_DIR", "/characters")
+        self.character_cards = self._load_character_cards()
 
     def _load_lora_adapters(self):
         adapters = []
@@ -141,6 +143,28 @@ class OpenAIvLLMEngine(vLLMEngine):
                 logging.info(f"---Initialized adapter not worked: {e}")
                 continue
         return adapters
+
+    def _load_character_cards(self):
+        cards = {}
+        if os.path.isdir(self.character_cards_dir):
+            for filename in os.listdir(self.character_cards_dir):
+                if filename.endswith('.json'):
+                    path = os.path.join(self.character_cards_dir, filename)
+                    try:
+                        with open(path, 'r') as f:
+                            card = json.load(f)
+                        name = card.get('name') or os.path.splitext(filename)[0]
+                        cards[name] = card
+                    except Exception as e:
+                        logging.warning(f"Failed to load character card {filename}: {e}")
+        else:
+            logging.info(f"Character cards directory {self.character_cards_dir} not found")
+        return cards
+
+    def _build_system_prompt(self, card: dict) -> str:
+        parts = [card.get('description'), card.get('behavior'), card.get('history')]
+        parts = [p for p in parts if p]
+        return "\n".join(parts)
 
     async def _initialize_engines(self):
         self.model_config = await self.llm.get_model_config()
@@ -199,6 +223,13 @@ class OpenAIvLLMEngine(vLLMEngine):
         elif openai_request.openai_route == "/v1/completions":
             request_class = CompletionRequest
             generator_function = self.completion_engine.create_completion
+
+        if openai_request.character:
+            card = self.character_cards.get(openai_request.character)
+            if card:
+                system_prompt = self._build_system_prompt(card)
+                messages = openai_request.openai_input.setdefault("messages", [])
+                messages.insert(0, {"role": "system", "content": system_prompt})
         
         try:
             request = request_class(

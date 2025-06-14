@@ -199,6 +199,7 @@ The way this works is that the first request will have a batch size of `DEFAULT_
 | `RAW_OPENAI_OUTPUT`                 | `1`                  | boolean as `int`                                         |Enables raw OpenAI SSE format string output when streaming.  **Required** to be enabled (which it is by default) for OpenAI compatibility. |
 | `OPENAI_SERVED_MODEL_NAME_OVERRIDE` | `None`               | `str`                                         |Overrides the name of the served model from model repo/path to specified name, which you will then be able to use the value for the `model` parameter when making OpenAI requests |
 | `OPENAI_RESPONSE_ROLE`              | `assistant`          | `str`                       |Role of the LLM's Response in OpenAI Chat Completions. |
+| `CHARACTER_CARDS_DIR`              | `/characters`        | `str`           |Directory containing JSON character cards loaded at startup. |
 
 #### Serverless Settings
 
@@ -210,6 +211,17 @@ The way this works is that the first request will have a batch size of `DEFAULT_
 
 > [!TIP]
 > If you are facing issues when using Mixtral 8x7B, Quantized models, or handling unusual models/architectures, try setting `TRUST_REMOTE_CODE` to `1`.
+
+### Character Cards
+Character cards are JSON files stored in `CHARACTER_CARDS_DIR`. Example:
+```json
+{
+  "name": "wizard",
+  "description": "Мудрый волшебник",
+  "behavior": "Отвечает загадками",
+  "history": "Учился в Академии магии"
+}
+```
 
 
 ### Option 2: Build Docker Image with Model Inside
@@ -380,6 +392,7 @@ When using the chat completion feature of the vLLM Serverless Endpoint Worker, y
   |--------------------------------|----------------------------------|---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
   | `messages`                     | Union[str, List[Dict[str, str]]] |               | List of messages, where each message is a dictionary with a `role` and `content`. The model's chat template will be applied to the messages automatically, so the model must have one or it should be specified as `CUSTOM_CHAT_TEMPLATE` env var.                                                                                                                        |
   | `model`                        | str                              |               | The model repo that you've deployed on your RunPod Serverless Endpoint. If you are unsure what the name is or are baking the model in, use the guide to get the list of available models in the **Examples: Using your RunPod endpoint with OpenAI** section                                                                                                                                                                                                                                                    |
+  | `character`                     | Optional[str]                  | None | Name of the character card to use. |
   | `temperature`                  | Optional[float]                  | 0.7           | Float that controls the randomness of the sampling. Lower values make the model more deterministic, while higher values make the model more random. Zero means greedy sampling.                                                                                                                                                                                                                               |
   | `top_p`                        | Optional[float]                  | 1.0           | Float that controls the cumulative probability of the top tokens to consider. Must be in (0, 1]. Set to 1 to consider all tokens. |
   | `n`                            | Optional[int]                    | 1             | Number of output sequences to return for the given prompt. |
@@ -450,6 +463,30 @@ This is the format used for GPT-4 and focused on instruction-following and chat.
   # Print the response
   print(response.choices[0].message.content)
   ```
+### Using Character Cards
+Include the `character` field to choose a persona:
+```python
+response = client.chat.completions.create(
+    model="<YOUR DEPLOYED MODEL REPO/NAME>",
+    messages=[{"role": "user", "content": "Hello"}],
+    character="wizard"
+)
+```
+
+#### Default Request with cURL
+You can also interact with a character using plain `curl`:
+```bash
+curl https://api.runpod.ai/v2/<YOUR ENDPOINT ID>/openai/v1/chat/completions \
+    -H "Content-Type: application/json" \
+    -H "Authorization: Bearer <YOUR OPENAI API KEY>" \
+    -d '{
+  "model": "<YOUR DEPLOYED MODEL REPO/NAME>",
+  "messages": [{"role": "user", "content": "Hello"}],
+  "character": "wizard"
+}'
+```
+
+
 
 ### Getting a list of names for available models:
 In the case of baking the model into the image, sometimes the repo may not be accepted as the `model` in the request. In this case, you can list the available models as shown below and use that name. 

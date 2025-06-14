@@ -50,7 +50,7 @@
         {
           "title": "OpenAI Settings",
           "settings": [
-            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE"
+            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE", "CHARACTER_CARDS_DIR"
           ]
         },
         {
@@ -111,7 +111,7 @@
         {
           "title": "OpenAI Settings",
           "settings": [
-            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE"
+            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE", "CHARACTER_CARDS_DIR"
           ]
         },
         {
@@ -172,7 +172,7 @@
         {
           "title": "OpenAI Settings",
           "settings": [
-            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE"
+            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE", "CHARACTER_CARDS_DIR"
           ]
         },
         {
@@ -233,7 +233,7 @@
         {
           "title": "OpenAI Settings",
           "settings": [
-            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE"
+            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE", "CHARACTER_CARDS_DIR"
           ]
         },
         {
@@ -294,7 +294,7 @@
         {
           "title": "OpenAI Settings",
           "settings": [
-            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE"
+            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE", "CHARACTER_CARDS_DIR"
           ]
         },
         {
@@ -355,7 +355,7 @@
         {
           "title": "OpenAI Settings",
           "settings": [
-            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE"
+            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE", "CHARACTER_CARDS_DIR"
           ]
         },
         {
@@ -416,7 +416,7 @@
         {
           "title": "OpenAI Settings",
           "settings": [
-            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE"
+            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE", "CHARACTER_CARDS_DIR"
           ]
         },
         {
@@ -477,7 +477,7 @@
         {
           "title": "OpenAI Settings",
           "settings": [
-            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE"
+            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE", "CHARACTER_CARDS_DIR"
           ]
         },
         {
@@ -538,7 +538,7 @@
         {
           "title": "OpenAI Settings",
           "settings": [
-            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE"
+            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE", "CHARACTER_CARDS_DIR"
           ]
         },
         {
@@ -599,7 +599,7 @@
         {
           "title": "OpenAI Settings",
           "settings": [
-            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE"
+            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE", "CHARACTER_CARDS_DIR"
           ]
         },
         {
@@ -659,7 +659,7 @@
         {
           "title": "OpenAI Settings",
           "settings": [
-            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE"
+            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE", "CHARACTER_CARDS_DIR"
           ]
         },
         {
@@ -719,7 +719,7 @@
         {
           "title": "OpenAI Settings",
           "settings": [
-            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE"
+            "RAW_OPENAI_OUTPUT", "OPENAI_RESPONSE_ROLE", "OPENAI_SERVED_MODEL_NAME_OVERRIDE", "CHARACTER_CARDS_DIR"
           ]
         },
         {
@@ -1388,6 +1388,14 @@
     "value": "",
     "title": "OpenAI Served Model Name Override",
     "description": "Overrides the name of the served model from model repo/path to specified name, which you will then be able to use the value for the `model` parameter when making OpenAI requests",
+    "required": false,
+    "type": "text"
+  },
+  "CHARACTER_CARDS_DIR": {
+    "env_var_name": "CHARACTER_CARDS_DIR",
+    "value": "/characters",
+    "title": "Character Cards Directory",
+    "description": "Directory containing JSON character cards loaded at startup",
     "required": false,
     "type": "text"
   },
